@@ -4,6 +4,7 @@ import os
 import re
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from backend.models import QueryRequest, QueryResponse, KeyDetail
@@ -26,12 +27,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-_production = os.environ.get("RENDER") or os.environ.get("RAILWAY") or os.environ.get("PRODUCTION")
-if _production:
-    frontend_dist = os.path.join(os.path.dirname(__file__), "..", "frontend", "dist")
-    if os.path.isdir(frontend_dist):
-        app.mount("/", StaticFiles(directory=frontend_dist, html=True), name="frontend")
-        logger.info(f"Serving frontend from {frontend_dist}")
+
 
 retriever = Retriever()
 llm = OpenRouterClient()
@@ -353,3 +349,24 @@ def list_events(category: str = None, year: int = None, limit: int = 50):
         events = db.get_all_events()
 
     return {"events": events[:limit], "total": len(events)}
+
+
+# ── Production static file serving (must be last — after all API routes) ──
+_production = os.environ.get("RENDER") or os.environ.get("RAILWAY") or os.environ.get("PRODUCTION")
+if _production:
+    FRONTEND_DIST = os.path.join(os.path.dirname(__file__), "..", "frontend", "dist")
+
+    @app.get("/{file_path:path}")
+    async def serve_frontend(file_path: str):
+        if file_path.startswith("api/") or file_path == "health" or file_path == "":
+            return {"error": "not found"}
+        if file_path.startswith("assets/"):
+            asset = os.path.normpath(os.path.join(FRONTEND_DIST, file_path))
+            if os.path.isfile(asset):
+                return FileResponse(asset)
+        index_path = os.path.join(FRONTEND_DIST, "index.html")
+        if os.path.isfile(index_path):
+            return FileResponse(index_path, media_type="text/html")
+        return {"error": "not found"}
+
+    logger.info(f"Serving frontend from {FRONTEND_DIST}")
