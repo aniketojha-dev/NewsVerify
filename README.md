@@ -1,6 +1,6 @@
 # NewsVerify
 
-**AI-powered news verification system for 2025–2026 events using hybrid retrieval (FAISS + SQLite) with OpenRouter LLM fallback.**
+**News verification system for 2025–2026 + Latest News events using hybrid retrieval (FAISS + SQLite) with OpenRouter LLM fallback.**
 
 ---
 
@@ -129,6 +129,10 @@ Event query
                         ├── Query OpenRouter with snippets
                         └── Score = 68 + 8 (if LLM OK), capped at 85
 ```
+
+---
+
+Live Link Here : https://newsverify-i7bo.onrender.com/
 
 ---
 
