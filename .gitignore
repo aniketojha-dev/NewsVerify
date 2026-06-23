@@ -2,7 +2,6 @@
 __pycache__/
 *.py[cod]
 *.egg-info/
-dist/
 *.egg
 .venv/
 venv/
@@ -11,15 +10,12 @@ venv/
 .env
 .env.local
 
-# Data (built during ingestion)
-data/*.db
-data/*.bin
+# Data (numpy cache only)
 data/*.npy
 
 # Node
 node_modules/
 frontend/node_modules/
-frontend/dist/
 frontend/.vite/
 
 # IDE

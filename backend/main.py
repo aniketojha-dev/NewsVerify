@@ -1,8 +1,10 @@
 import json
 import logging
+import os
 import re
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from backend.models import QueryRequest, QueryResponse, KeyDetail
 from backend.year_detector import detect_year
@@ -23,6 +25,13 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+_production = os.environ.get("RENDER") or os.environ.get("PRODUCTION")
+if _production:
+    frontend_dist = os.path.join(os.path.dirname(__file__), "..", "frontend", "dist")
+    if os.path.isdir(frontend_dist):
+        app.mount("/", StaticFiles(directory=frontend_dist, html=True), name="frontend")
+        logger.info(f"Serving frontend from {frontend_dist}")
 
 retriever = Retriever()
 llm = OpenRouterClient()

@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: newsverify
+    runtime: python
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: python run.py
+    envVars:
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: RENDER
+        value: "true"
+    healthCheckPath: /health

@@ -23,9 +23,13 @@ def main():
         logger.info(f"Database now has {count} events")
 
     import uvicorn
-    logger.info("Starting NewsVerify AI server at http://localhost:8000")
-    logger.info("Open frontend at http://localhost:3000 (run: cd frontend && npm run dev)")
-    uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=False)
+    port = int(os.environ.get("PORT", 8000))
+    is_prod = os.environ.get("RENDER") or os.environ.get("PRODUCTION")
+    host = "0.0.0.0"
+    logger.info(f"Starting NewsVerify AI server at http://localhost:{port}")
+    if not is_prod:
+        logger.info("Open frontend at http://localhost:3000 (run: cd frontend && npm run dev)")
+    uvicorn.run("backend.main:app", host=host, port=port, reload=False)
 
 
 if __name__ == "__main__":
