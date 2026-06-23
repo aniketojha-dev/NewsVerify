@@ -352,9 +352,8 @@ def list_events(category: str = None, year: int = None, limit: int = 50):
 
 
 # ── Production static file serving (must be last — after all API routes) ──
-_production = os.environ.get("RENDER") or os.environ.get("RAILWAY") or os.environ.get("PRODUCTION")
-if _production:
-    FRONTEND_DIST = os.path.join(os.path.dirname(__file__), "..", "frontend", "dist")
+FRONTEND_DIST = os.path.join(os.path.dirname(__file__), "..", "frontend", "dist")
+if os.path.isdir(FRONTEND_DIST) and os.path.isfile(os.path.join(FRONTEND_DIST, "index.html")):
 
     @app.get("/{file_path:path}")
     async def serve_frontend(file_path: str):
