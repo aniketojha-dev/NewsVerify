@@ -357,7 +357,7 @@ if os.path.isdir(FRONTEND_DIST) and os.path.isfile(os.path.join(FRONTEND_DIST, "
 
     @app.get("/{file_path:path}")
     async def serve_frontend(file_path: str):
-        if file_path.startswith("api/") or file_path == "health" or file_path == "":
+        if file_path.startswith("api/") or file_path == "health":
             return {"error": "not found"}
         if file_path.startswith("assets/"):
             asset = os.path.normpath(os.path.join(FRONTEND_DIST, file_path))
