@@ -24,7 +24,7 @@ def main():
 
     import uvicorn
     port = int(os.environ.get("PORT", 8000))
-    is_prod = os.environ.get("RENDER") or os.environ.get("PRODUCTION")
+    is_prod = os.environ.get("RENDER") or os.environ.get("RAILWAY") or os.environ.get("PRODUCTION")
     host = "0.0.0.0"
     logger.info(f"Starting NewsVerify AI server at http://localhost:{port}")
     if not is_prod:

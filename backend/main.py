@@ -26,7 +26,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-_production = os.environ.get("RENDER") or os.environ.get("PRODUCTION")
+_production = os.environ.get("RENDER") or os.environ.get("RAILWAY") or os.environ.get("PRODUCTION")
 if _production:
     frontend_dist = os.path.join(os.path.dirname(__file__), "..", "frontend", "dist")
     if os.path.isdir(frontend_dist):
