@@ -132,4 +132,4 @@ Event query
                         └── Score = 68 + 8 (if LLM OK), capped at 85
 ```
 
-*Built by Aniket Ojha*
+<p align="center">Built By Aniket Ojha</p>
