@@ -2,6 +2,8 @@
 
 **News verification system for 2025–2026 + Latest News events using hybrid retrieval (FAISS + SQLite) with OpenRouter LLM fallback.**
 
+Live Link Here : https://newsverify-i7bo.onrender.com
+
 ---
 
 ## Concept
@@ -130,10 +132,4 @@ Event query
                         └── Score = 68 + 8 (if LLM OK), capped at 85
 ```
 
----
-
-Live Link Here : https://newsverify-i7bo.onrender.com/
-
----
-
-*Built with Python, React, FAISS, and OpenRouter.*
+*Built by Aniket Ojha*
